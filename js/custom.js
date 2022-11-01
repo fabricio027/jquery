@@ -48,15 +48,119 @@ $(document).ready(function(){
         alert('Produto esgotado');
 
      })
-     
-     
-     
-     
+});
 
+// Callback
 
-
-
-
-
-
+$('.featured-item:nth(1)')
+   .hide(2000, function(){
+      console.log($(this).find('h4').text() + ' esgotado.');
 })
+   .show(2000, function() {
+      console.log($(this).find('h4').text() + ' em estoque.');
+   })
+
+
+// Animações
+
+const duracao = 1000;
+
+$('.featured-item:nth(0)')
+.hide(duracao)
+.show(duracao)
+.fadeOut(duracao)
+.fadeIn(duracao)
+.toggle(duracao)
+.toggle(duracao);
+
+$('#form-submit').on('click', function(e){
+
+   e.preventDefault()
+
+   if( $('#email').val() != '' ){
+
+      $('#email').animate({
+         opacity: "toggle",
+         top: "-50"
+      }, 500, function(){
+         console.log($(this).val())
+      })
+
+   }
+
+
+});
+
+
+/*
+ * Ouvinte de eventos .nav-modal-open
+ */
+$('.nav-modal-open').on('click', function(e){
+
+   e.preventDefault();
+
+   let elem = $(this).attr('rel')
+
+   $('.modal-body').html($('#'+elem).html())
+   
+   $('.modal-header h5.modal-title').html($(this).text())
+
+   let myModal = new bootstrap.Modal($('#modelId'))
+
+   myModal.show()
+
+   validar();
+});
+
+function validar() {
+   //Valida nome
+   $('input#nome').blur(function(){
+
+      let nome = document.getElementById('nome');
+      let pattern = /[0-9a-z]{2,}/i
+
+      if(nome.value.match(pattern) == null) {
+         $(this).addClass('erro-form');
+         $('.msg-erro-form').removeClass('d-none');
+      } else {
+         $(this).removeClass('erro-form');
+         $('.msg-erro-form').addClass('d-none');
+      }
+      
+   });
+
+   //Valida e-mail
+   $('input#email-modal').blur(function(){
+
+      let email = document.getElementById('email-modal');
+      let pattern = /[0-9a-z]+@[0-9a-z]+\.[0-9a-z]+/
+
+      if(email.value.match(pattern) == null) {
+         $(this).addClass('erro-form');
+         $('.msg-erro-form').removeClass('d-none');
+      } else {
+         $(this).removeClass('erro-form');
+         $('.msg-erro-form').addClass('d-none');
+      }
+      
+   });
+
+   //Valida CPF
+   $('input#cpf').blur(function(){
+
+      let cpf = document.getElementById('cpf');
+      let pattern = /\d{3}\.?\d{3}\.?\d{3}-?\d{2}/
+
+      if(cpf.value.match(pattern) == null) {
+         $(this).addClass('erro-form');
+         $('.msg-erro-form').removeClass('d-none');
+      } else {
+         $(this).removeClass('erro-form');
+         $('.msg-erro-form').addClass('d-none');
+      }
+      
+   });
+}
+
+
+
